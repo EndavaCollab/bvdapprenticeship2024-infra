@@ -8,9 +8,16 @@ variable "server_name" {
   type        = string
 }
 
-variable "database_name" {
-  description = "Name for the MySql database to be created inside the server"
+variable "rcb_database_name" {
+  description = "Name for the MySql database to be created inside the server. (Recipe book)"
   type        = string
+  default = "rcb_db"
+}
+
+variable "exm_database_name" {
+  description = "Name for the MySql database to be created inside the server (Expense manager)"
+  type        = string
+  default = "exm_db"
 }
 
 variable "location" {
