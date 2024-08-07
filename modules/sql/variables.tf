@@ -3,8 +3,13 @@ variable "resource_group_name" {
   type        = string
 }
 
-variable "name" {
-  description = "Name for the database"
+variable "server_name" {
+  description = "Name for the MySql server"
+  type        = string
+}
+
+variable "database_name" {
+  description = "Name for the MySql database to be created inside the server"
   type        = string
 }
 
