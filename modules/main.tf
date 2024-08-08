@@ -1,7 +1,3 @@
-provider "azurerm" {
-  features {}
-}
-
 resource "azurerm_resource_group" "main" {
   name     = var.resource_group_name
   location = var.location
@@ -24,7 +20,7 @@ module "security" {
   location            = var.location
 }
 
-module "vm_rcb" {
+module "rcb_vm" {
   source                  = "./modules/vm"
   resource_group_name     = azurerm_resource_group.main.name
   location                = var.location
@@ -35,7 +31,7 @@ module "vm_rcb" {
   network_interface_ids   = [module.networking.subnet_id]
 }
 
-module "vm_exm" {
+module "exm_vm" {
   source                  = "./modules/vm"
   resource_group_name     = azurerm_resource_group.main.name
   location                = var.location
@@ -55,34 +51,4 @@ module "sql" {
   admin_password          = var.admin_password
   rcb_database_name       = var.rcb_database_name
   exm_database_name       = var.exm_database_name
-}
-
-output "rcb_vm_name" {
-  value       = module.vm_rcb.name
-  description = "Name of the created VM for Recipe Book"
-}
-
-output "exm_vm_name" {
-  value       = module.vm_exm.name
-  description = "Name of the created VM for Expense Manager"
-}
-
-output "rcb_vm_ip_address" {
-  value       = module.vm_rcb.ip_address
-  description = "Public IP address for the created VM for Recipe Book"
-}
-
-output "exm_vm_ip_address" {
-  value       = module.vm_exm.ip_address
-  description = "Public IP address for the created VM for Expense Manager"
-}
-
-output "rcp_jdbc_string" {
-  value       = module.sql.rcp_jdbc_string
-  description = "JDBC string to initialize the DB connection (Recipe book)"
-}
-
-output "exm_jdbc_string" {
-  value       = module.sql.exm_jdbc_string
-  description = "JDBC string to initialize the DB connection (Expense manager)"
 }
