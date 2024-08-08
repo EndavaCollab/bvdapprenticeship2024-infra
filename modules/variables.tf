@@ -84,3 +84,15 @@ variable "admin_password" {
   type        = string
   sensitive   = true
 }
+
+variable "backend_exm_port" {
+  description = "Port for Expense Manager backend application"
+  type        = number
+  default     = 8080
+}
+
+variable "backend_rcb_port" {
+  description = "Port for Recipe Book backend application"
+  type        = number
+  default     = 8080
+}
