@@ -35,7 +35,7 @@ module "rcb_vm" {
   admin_username          = var.admin_username
   admin_ssh_public_key    = var.admin_ssh_public_key
   disk_size               = var.disk_size
-  network_interface_ids   = [module.networking.subnets[0].id] 
+  network_interface_ids   = [module.networking.subnet_ids[0]] 
   subnet_index            = 0
 }
 
@@ -47,7 +47,7 @@ module "exm_vm" {
   admin_username          = var.admin_username
   admin_ssh_public_key    = var.admin_ssh_public_key
   disk_size               = var.disk_size
-  network_interface_ids   = [module.networking.subnets[1].id]  
+  network_interface_ids   = [module.networking.subnet_ids[1].id]  
   subnet_index            = 1 
 }
 
