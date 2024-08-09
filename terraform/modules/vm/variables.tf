@@ -6,7 +6,6 @@ variable "resource_group_name" {
 variable "location" {
   description = "Location for the VM (default: EU West)"
   type        = string
-  default     = "West Europe"
 }
 
 variable "server_name" {
