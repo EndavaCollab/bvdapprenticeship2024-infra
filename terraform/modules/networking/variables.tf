@@ -19,9 +19,10 @@ variable "location" {
 }
 
 variable "subnets" {
-  description = "List of subnets to be created"
-  type = map(object({
+  description = "List of subnets to create"
+  type = list(object({
     name   = string
     prefix = string
   }))
 }
+

@@ -4,6 +4,7 @@ output "vnet_id" {
 }
 
 output "subnet_ids" {
-  value       = { for s in azurerm_subnet.subnet : s.name => s.id }
   description = "IDs of the created subnets"
+  value       = azurerm_subnet.subnet[*].id
 }
+
