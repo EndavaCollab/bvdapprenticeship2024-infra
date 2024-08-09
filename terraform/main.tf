@@ -47,7 +47,7 @@ module "exm_vm" {
   admin_username          = var.admin_username
   admin_ssh_public_key    = var.admin_ssh_public_key
   disk_size               = var.disk_size
-  network_interface_ids   = [module.networking.subnet_ids[1].id]  
+  network_interface_ids   = [module.networking.subnet_ids[1]]  
   subnet_index            = 1 
 }
 
