@@ -1,17 +1,21 @@
-resource "azurerm_resource_group" "main" {
-  name     = var.resource_group_name
-  location = var.location
+data "azurerm_resource_group" "rg" {
+  name = var.resource_group_name
 }
 
 module "networking" {
   source              = "./modules/networking"
   vnet_name           = var.vnet_name
-  subnet_name         = var.subnet_name
-  resource_group_name = azurerm_resource_group.main.name
+  resource_group_name = data.azurerm_resource_group.rg.name
   location            = var.location
   address_space       = var.address_space
-  subnet_prefix       = var.subnet_prefix
+  subnets = [
+    {
+      name   = var.subnet_name
+      prefix = var.subnet_prefix
+    }
+  ]
 }
+
 
 module "security" {
   source              = "./modules/security"
