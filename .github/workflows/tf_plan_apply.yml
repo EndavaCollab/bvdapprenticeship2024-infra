@@ -4,14 +4,10 @@ on:
   workflow_dispatch:
     inputs:
       action_type:
-        type: choice
-        description: What actions should be done?
+        type: boolean
+        description: Should terraform apply be run?
         required: true
-        default: Plan & Apply
-        options: 
-        - Plan
-        - Apply
-        - Plan & Apply
+        default: true
 
 jobs:
     plan_apply:
@@ -32,9 +28,8 @@ jobs:
           run: terraform init
             
         - name: Terraform Plan
-          if: contains(fromJSON('["Plan", "Plan & Apply"]'), github.event.inputs.action_type)
           run: terraform plan -input=false
         
         - name: Terraform Apply
-          if: contains(fromJSON('["Apply", "Plan & Apply"]'), github.event.inputs.action_type)
+          if: github.event.inputs.action_type
           run: terraform apply -auto-approve  
