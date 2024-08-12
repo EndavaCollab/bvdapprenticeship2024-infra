@@ -11,19 +11,16 @@ variable "server_name" {
 variable "rcb_database_name" {
   description = "Name for the MySql database to be created inside the server. (Recipe book)"
   type        = string
-  default = "rcb_db"
 }
 
 variable "exm_database_name" {
   description = "Name for the MySql database to be created inside the server (Expense manager)"
   type        = string
-  default = "exm_db"
 }
 
 variable "location" {
   description = "Location for the database (default: EU West)"
   type        = string
-  default     = "West Europe"
 }
 
 variable "admin_username" {
