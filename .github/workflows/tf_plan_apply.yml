@@ -1,0 +1,40 @@
+name: Manual - Terraform Plan / Apply
+
+on:
+  workflow_dispatch:
+    inputs:
+      action_type:
+        type: choice
+        description: What actions should be done?
+        required: true
+        default: Plan & Apply
+        options: 
+        - Plan
+        - Apply
+        - Plan & Apply
+
+jobs:
+    plan_apply:
+      runs-on: ubuntu-latest
+      steps:
+        - name: Checkout repository
+          uses: actions/checkout@v2
+
+        - name: Log in with Azure
+          uses: azure/login@v1
+          with:
+            creds: '${{ secrets.AZURE_CREDENTIALS }}'
+
+        - name: Install terraform
+          uses: hashicorp/setup-terraform@v1
+
+        - name: Download terraform dependencies
+          run: terraform init
+            
+        - name: Terraform Plan
+          if: contains(fromJSON('["Plan", "Plan & Apply"]'), github.event.inputs.action_type)
+          run: terraform plan -input=false
+        
+        - name: Terraform Apply
+          if: contains(fromJSON('["Apply", "Plan & Apply"]'), github.event.inputs.action_type)
+          run: terraform apply -auto-approve  
