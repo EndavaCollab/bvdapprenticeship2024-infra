@@ -7,7 +7,7 @@ on:
         type: boolean
         description: Should terraform apply be run?
         required: true
-        default: true
+        default: false
 
 jobs:
     plan_apply:
