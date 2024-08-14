@@ -17,6 +17,10 @@ jobs:
     plan_apply:
       runs-on: ubuntu-latest
       environment: apply
+      env:
+        ARM_CLIENT_ID: "${{ secrets.AZURE_CLIENT_ID }}"
+        ARM_SUBSCRIPTION_ID: "${{ secrets.AZURE_SUBSCRIPTION_ID }}"
+        ARM_TENANT_ID: "${{ secrets.AZURE_TENANT_ID }}"
       steps:
         - name: Checkout repository
           uses: actions/checkout@v2
@@ -33,10 +37,6 @@ jobs:
 
         - name: Download terraform dependencies
           run: terraform -chdir=terraform/ init
-          env:
-            ARM_CLIENT_ID: ${{secrets.AZURE_CLIENT_ID}}
-            ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
-            ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
             
         - name: Terraform Plan
           run: terraform -chdir=terraform/ plan -input=false
