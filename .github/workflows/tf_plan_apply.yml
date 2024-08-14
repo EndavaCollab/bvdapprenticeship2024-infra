@@ -12,15 +12,17 @@ on:
 jobs:
     plan_apply:
       runs-on: ubuntu-latest
+      environment: apply
       steps:
         - name: Checkout repository
           uses: actions/checkout@v2
 
-        - name: Azure Login action
+        - name: Azure CLI Login
           uses: azure/login@v2
           with:
-            creds: "${{ secrets.AZURE_CREDENTIALS }}"
-            enable-AzPSSession: true
+            client-id: ${{ secrets.AZURE_CLIENT_ID }}
+            tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+            subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
         - name: Install terraform
           uses: hashicorp/setup-terraform@v1
