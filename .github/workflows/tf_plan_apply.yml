@@ -9,6 +9,10 @@ on:
         required: true
         default: false
 
+permissions:
+  id-token: write # This is required for requesting the JWT
+  contents: read
+
 jobs:
     plan_apply:
       runs-on: ubuntu-latest
