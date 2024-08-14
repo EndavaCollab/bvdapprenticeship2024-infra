@@ -32,11 +32,11 @@ jobs:
           uses: hashicorp/setup-terraform@v1
 
         - name: Download terraform dependencies
-          run: terraform init -chdir=terraform/
+          run: terraform -chdir=terraform/ init
             
         - name: Terraform Plan
-          run: terraform plan -chdir=terraform/ -input=false
+          run: terraform -chdir=terraform/ plan -input=false
         
         - name: Terraform Apply
           if: github.event.inputs.action_type
-          run: terraform apply -chdir=terraform/ -auto-approve  
+          run: terraform -chdir=terraform/ apply -auto-approve  
