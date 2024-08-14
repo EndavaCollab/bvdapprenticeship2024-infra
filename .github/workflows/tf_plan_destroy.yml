@@ -1,0 +1,32 @@
+name: Terraform Destroy
+
+on:
+  workflow_dispatch:
+    inputs:
+      confirm_destroy:
+        description: 'Are you sure you want to destroy the infrastructure?'
+        required: true
+        type: boolean
+        default: false
+
+jobs:
+  destroy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v1
+
+    - name: Terraform Init
+      run: terraform init
+
+    - name: Terraform Plan (destroy)
+      if: github.event.inputs.confirm_destroy == 'true'
+      run: terraform plan -destroy -input=false
+
+    - name: Terraform Destroy
+      if: github.event.inputs.confirm_destroy == 'true'
+      run: terraform destroy -auto-approve
