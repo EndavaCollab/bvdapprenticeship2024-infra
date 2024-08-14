@@ -31,15 +31,12 @@ jobs:
         - name: Install terraform
           uses: hashicorp/setup-terraform@v1
 
-        - name: Change directory to ./terraform
-          run: cd ./terraform
-
         - name: Download terraform dependencies
-          run: terraform init
+          run: terraform init -chdir=terraform/
             
         - name: Terraform Plan
-          run: terraform plan -input=false
+          run: terraform plan -chdir=terraform/ -input=false
         
         - name: Terraform Apply
           if: github.event.inputs.action_type
-          run: terraform apply -auto-approve  
+          run: terraform apply -chdir=terraform/ -auto-approve  
