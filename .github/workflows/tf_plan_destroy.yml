@@ -24,7 +24,6 @@ jobs:
       run: terraform init
 
     - name: Terraform Plan (destroy)
-      if: github.event.inputs.confirm_destroy == 'true'
       run: terraform plan -destroy -input=false
 
     - name: Terraform Destroy
