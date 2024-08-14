@@ -31,6 +31,9 @@ jobs:
         - name: Install terraform
           uses: hashicorp/setup-terraform@v1
 
+        - name: Change directory to ./terraform
+          run: cd ./terraform
+
         - name: Download terraform dependencies
           run: terraform init
             
