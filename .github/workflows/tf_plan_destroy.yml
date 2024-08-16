@@ -41,7 +41,15 @@ jobs:
 
     - name: Terraform Plan (destroy)
       run: terraform -chdir=terraform/ plan -destroy -input=false
+      env:
+        TF_VAR_admin_username: ${{secrets.TF_VAR_ADMIN_USERNAME}}
+        TF_VAR_admin_password: ${{secrets.TF_VAR_ADMIN_PASSWORD}}
+        TF_VAR_admin_ssh_public_key: ${{secrets.TF_VAR_ADMIN_SSH_PUBLIC_KEY}}
 
     - name: Terraform Destroy
       if: github.event.inputs.confirm_destroy == 'true'
       run: terraform -chdir=terraform/ destroy -auto-approve
+      env:
+        TF_VAR_admin_username: ${{secrets.TF_VAR_ADMIN_USERNAME}}
+        TF_VAR_admin_password: ${{secrets.TF_VAR_ADMIN_PASSWORD}}
+        TF_VAR_admin_ssh_public_key: ${{secrets.TF_VAR_ADMIN_SSH_PUBLIC_KEY}}
