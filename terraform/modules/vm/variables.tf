@@ -28,12 +28,7 @@ variable "disk_size" {
   type        = number
 }
 
-variable "network_interface_ids" {
-  description = "List of subnet IDs to create network interfaces"
-  type        = list(string)
-}
-
-variable "subnet_index" {
-  description = "Index of the subnet to associate with the VM"
+variable "subnet_id" {
+  description = "The ID of the subnet to associate with the VM"
   type        = number
 }

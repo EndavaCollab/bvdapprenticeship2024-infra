@@ -19,27 +19,25 @@ module "security" {
 }
 
 module "rcb_vm" {
-  source                = "./modules/vm"
-  resource_group_name   = var.resource_group_name
-  location              = var.location
-  server_name           = var.rcb_vm_name
-  admin_username        = var.admin_username
-  admin_ssh_public_key  = var.admin_ssh_public_key
-  disk_size             = var.disk_size
-  network_interface_ids = [module.networking.subnet_ids[0]]
-  subnet_index          = 0
+  source               = "./modules/vm"
+  resource_group_name  = var.resource_group_name
+  location             = var.location
+  server_name          = var.rcb_vm_name
+  admin_username       = var.admin_username
+  admin_ssh_public_key = var.admin_ssh_public_key
+  disk_size            = var.disk_size
+  subnet_id            = module.networking.subnet_ids[0]
 }
 
 module "exm_vm" {
-  source                = "./modules/vm"
-  resource_group_name   = var.resource_group_name
-  location              = var.location
-  server_name           = var.exm_vm_name
-  admin_username        = var.admin_username
-  admin_ssh_public_key  = var.admin_ssh_public_key
-  disk_size             = var.disk_size
-  network_interface_ids = [module.networking.subnet_ids[1]]
-  subnet_index          = 1
+  source               = "./modules/vm"
+  resource_group_name  = var.resource_group_name
+  location             = var.location
+  server_name          = var.exm_vm_name
+  admin_username       = var.admin_username
+  admin_ssh_public_key = var.admin_ssh_public_key
+  disk_size            = var.disk_size
+  subnet_id            = module.networking.subnet_ids[1]
 }
 
 module "sql" {
