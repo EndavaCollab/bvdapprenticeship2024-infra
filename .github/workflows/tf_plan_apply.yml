@@ -50,7 +50,7 @@ jobs:
           run: terraform -chdir=terraform/ plan -input=false
         
         - name: Terraform Apply
-          if: github.event.inputs.action_type
+          if: ${{ github.event.inputs.action_type == 'true' }}
           env:
             # Terraform secrets
             TF_VAR_admin_username: ${{secrets.TF_VAR_ADMIN_USERNAME}}
