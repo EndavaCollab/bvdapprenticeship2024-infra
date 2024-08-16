@@ -30,5 +30,5 @@ variable "disk_size" {
 
 variable "subnet_id" {
   description = "The ID of the subnet to associate with the VM"
-  type        = number
+  type        = string
 }
