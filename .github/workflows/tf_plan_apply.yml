@@ -23,11 +23,6 @@ jobs:
         ARM_SUBSCRIPTION_ID: "${{ secrets.AZURE_SUBSCRIPTION_ID }}"
         ARM_TENANT_ID: "${{ secrets.AZURE_TENANT_ID }}"
         ARM_USE_OIDC: true
-        
-        # Terraform secrets
-        TF_VAR_admin_username: ${{secrets.TF_VAR_ADMIN_USERNAME}}
-        TF_VAR_admin_password: ${{secrets.TF_VAR_ADMIN_PASSWORD}}
-        TF_VAR_ssh_public_key: ${{secrets.TF_VAR_ADMIN_SSH_PUBLIC_KEY}}
       steps:
         - name: Checkout repository
           uses: actions/checkout@v2
@@ -46,8 +41,18 @@ jobs:
           run: terraform -chdir=terraform/ init
             
         - name: Terraform Plan
+          env:
+            # Terraform secrets
+            TF_VAR_admin_username: ${{secrets.TF_VAR_ADMIN_USERNAME}}
+            TF_VAR_admin_password: ${{secrets.TF_VAR_ADMIN_PASSWORD}}
+            TF_VAR_ssh_public_key: ${{secrets.TF_VAR_ADMIN_SSH_PUBLIC_KEY}}
           run: terraform -chdir=terraform/ plan -input=false
         
         - name: Terraform Apply
           if: github.event.inputs.action_type
+          env:
+            # Terraform secrets
+            TF_VAR_admin_username: ${{secrets.TF_VAR_ADMIN_USERNAME}}
+            TF_VAR_admin_password: ${{secrets.TF_VAR_ADMIN_PASSWORD}}
+            TF_VAR_ssh_public_key: ${{secrets.TF_VAR_ADMIN_SSH_PUBLIC_KEY}}
           run: terraform -chdir=terraform/ apply -auto-approve  
