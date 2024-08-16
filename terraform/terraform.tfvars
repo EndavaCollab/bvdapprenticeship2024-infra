@@ -2,7 +2,7 @@
 resource_group_name = "apprenticeship-2024-rg"
 disk_size           = 30
 location            = "North Europe"
-sql_server_name     = "jrxk6sqnz2kq5hf9"
+sql_server_name     = "sql-server-apprenticeship"
 nsg_name            = "nsg"
 vnet_name           = "vnet"
 address_space       = ["10.0.0.0/16"]
