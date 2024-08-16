@@ -46,7 +46,6 @@ jobs:
             TF_VAR_admin_username: ${{secrets.TF_VAR_ADMIN_USERNAME}}
             TF_VAR_admin_password: ${{secrets.TF_VAR_ADMIN_PASSWORD}}
             TF_VAR_admin_ssh_public_key: ${{secrets.TF_VAR_ADMIN_SSH_PUBLIC_KEY}}
-            TF_VAR_sql_server_name: ${{secrets.TF_VAR_SQL_SERVER_NAME}}
           run: terraform -chdir=terraform/ plan -input=false
         
         - name: Terraform Apply
@@ -56,5 +55,4 @@ jobs:
             TF_VAR_admin_username: ${{secrets.TF_VAR_ADMIN_USERNAME}}
             TF_VAR_admin_password: ${{secrets.TF_VAR_ADMIN_PASSWORD}}
             TF_VAR_admin_ssh_public_key: ${{secrets.TF_VAR_ADMIN_SSH_PUBLIC_KEY}}
-            TF_VAR_sql_server_name: ${{secrets.TF_VAR_SQL_SERVER_NAME}}
           run: terraform -chdir=terraform/ apply -auto-approve  
