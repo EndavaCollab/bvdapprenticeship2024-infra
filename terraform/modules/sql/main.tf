@@ -5,6 +5,7 @@ resource "azurerm_mysql_flexible_server" "server" {
   administrator_login    = var.admin_username
   sku_name               = "B_Standard_B1s"
   administrator_password = var.admin_password
+  zone                   = "1"
 }
 
 resource "azurerm_mysql_flexible_database" "rcb_database" {
