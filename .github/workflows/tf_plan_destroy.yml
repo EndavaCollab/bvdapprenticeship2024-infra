@@ -38,7 +38,7 @@ jobs:
         subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
     - name: Terraform Init
-      run: terraform init
+      run: terraform -chdir=terraform/ init
 
     - name: Terraform Plan (destroy)
       run: terraform -chdir=terraform/ plan -destroy -input=false
