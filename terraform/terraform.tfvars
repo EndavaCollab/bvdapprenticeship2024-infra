@@ -1,10 +1,11 @@
 # General
-disk_size       = 30
-location        = "North Europe"
-nsg_name        = "nsg"
-sql_server_name = "server"
-vnet_name       = "vnet"
-address_space   = ["10.0.0.0/16"]
+resource_group_name = "apprenticeship-2024-rg"
+disk_size           = 30
+location            = "North Europe"
+nsg_name            = "nsg"
+sql_server_name     = "server"
+vnet_name           = "vnet"
+address_space       = ["10.0.0.0/16"]
 subnets = [
   {
     name   = "exm-subnet-1"
@@ -31,4 +32,3 @@ rcb_vm_name       = "rcb-vm"
 # admin_password -> TF_VAR_admin_password (used for db)
 # admin_username -> TF_VAR_admin_username (used for both db and vms)
 # admin_ssh_public_key -> TF_VAR_admin_ssh_public_key (used for vms)
-# resource_group_name -> TF_VAR_resource_group_name
