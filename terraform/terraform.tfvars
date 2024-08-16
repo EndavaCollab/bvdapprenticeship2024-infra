@@ -3,7 +3,6 @@ resource_group_name = "apprenticeship-2024-rg"
 disk_size           = 30
 location            = "North Europe"
 nsg_name            = "nsg"
-sql_server_name     = "server"
 vnet_name           = "vnet"
 address_space       = ["10.0.0.0/16"]
 subnets = [
