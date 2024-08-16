@@ -18,10 +18,16 @@ jobs:
       runs-on: ubuntu-latest
       environment: apply
       env:
+        # azurerm required env variables for OIDC login + use_oidc: true in provider block (.tf)
         ARM_CLIENT_ID: "${{ secrets.AZURE_CLIENT_ID }}"
         ARM_SUBSCRIPTION_ID: "${{ secrets.AZURE_SUBSCRIPTION_ID }}"
         ARM_TENANT_ID: "${{ secrets.AZURE_TENANT_ID }}"
         ARM_USE_OIDC: true
+        
+        # Terraform secrets
+        TF_VARS_admin_username: ${{secrets.TF_VAR_ADMIN_USERNAME}}
+        TF_VARS_admin_password: ${{secrets.TF_VAR_ADMIN_PASSWORD}}
+        TF_VARS_ssh_public_key: ${{secrets.TF_VAR_ADMIN_SSH_PUBLIC_KEY}}
       steps:
         - name: Checkout repository
           uses: actions/checkout@v2
