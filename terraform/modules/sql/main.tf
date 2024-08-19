@@ -1,10 +1,11 @@
 resource "azurerm_mysql_flexible_server" "server" {
-  name                = var.server_name
-  resource_group_name = var.resource_group_name
-  location            = var.location
-  administrator_login = var.admin_username
-  # TODO: password as secret
+  name                   = var.server_name
+  resource_group_name    = var.resource_group_name
+  location               = var.location
+  administrator_login    = var.admin_username
+  sku_name               = "B_Standard_B1s"
   administrator_password = var.admin_password
+  zone                   = "1"
 }
 
 resource "azurerm_mysql_flexible_database" "rcb_database" {
