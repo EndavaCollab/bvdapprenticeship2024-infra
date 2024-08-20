@@ -19,6 +19,7 @@ resource "azurerm_public_ip" "ip" {
   resource_group_name = var.resource_group_name
   location            = var.location
   allocation_method   = "Dynamic"
+  
   lifecycle {
     create_before_destroy = true
   }
@@ -29,9 +30,7 @@ resource "azurerm_network_interface" "network_interface" {
   name                = var.networks[count.index].network_interface_name
   location            = var.location
   resource_group_name = var.resource_group_name
-  lifecycle {
-    create_before_destroy = true
-  }
+
   ip_configuration {
     name                          = "internal"
     subnet_id                     = azurerm_subnet.subnet[count.index].id

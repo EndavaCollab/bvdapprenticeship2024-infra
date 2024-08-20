@@ -24,4 +24,8 @@ resource "azurerm_linux_virtual_machine" "server" {
     sku       = "22_04-lts"
     version   = "latest"
   }
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }
