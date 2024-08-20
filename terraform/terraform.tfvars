@@ -6,14 +6,19 @@ sql_server_name     = "sql-server-apprenticeship"
 nsg_name            = "nsg"
 vnet_name           = "vnet"
 address_space       = ["10.0.0.0/16"]
-subnets = [
+
+networks = [
   {
-    name   = "exm-subnet-1"
-    prefix = "10.0.1.0/24"
+    network_interface_name = "exm-nic"
+    subnet_name            = "exm-subnet-1"
+    subnet_prefix          = "10.0.1.0/24"
+    public_ip_address_name = "exm-public-ip"
   },
   {
-    name   = "rcb-subnet-1"
-    prefix = "10.0.2.0/24"
+    network_interface_name = "rcb-nic"
+    subnet_name            = "rcb-subnet"
+    subnet_prefix          = "10.0.2.0/24"
+    public_ip_address_name = "rcb-public-ip"
   }
 ]
 

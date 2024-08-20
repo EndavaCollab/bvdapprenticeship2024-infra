@@ -82,10 +82,20 @@ variable "backend_rcb_port" {
   type        = number
 }
 
-variable "subnets" {
-  description = "Required subnets to deploy the VMs"
+# variable "subnets" {
+#   description = "Required subnets to deploy the VMs"
+#   type = list(object({
+#     name   = string,
+#     prefix = string
+#   }))
+# }
+
+variable "networks" {
+  description = "List of networks required to deploy the VMs"
   type = list(object({
-    name   = string,
-    prefix = string
+    network_interface_name = string,
+    subnet_name            = string,
+    subnet_prefix          = string,
+    public_ip_address_name = string
   }))
 }

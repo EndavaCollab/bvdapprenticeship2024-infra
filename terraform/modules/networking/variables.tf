@@ -18,11 +18,12 @@ variable "location" {
   type        = string
 }
 
-variable "subnets" {
-  description = "List of subnets to create"
+variable "networks" {
+  description = "List of networks required to deploy the VMs"
   type = list(object({
-    name   = string
-    prefix = string
+    network_interface_name = string,
+    subnet_name            = string,
+    subnet_prefix          = string,
+    public_ip_address_name = string
   }))
 }
-

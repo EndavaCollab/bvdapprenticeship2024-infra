@@ -8,7 +8,7 @@ module "networking" {
   resource_group_name = var.resource_group_name
   location            = var.location
   address_space       = var.address_space
-  subnets             = var.subnets
+  networks            = var.networks
 }
 
 module "security" {
@@ -27,6 +27,8 @@ module "rcb_vm" {
   admin_ssh_public_key = var.admin_ssh_public_key
   disk_size            = var.disk_size
   subnet_id            = module.networking.subnet_ids[0]
+  public_address_id    = module.networking.public_ip_ids[0]
+  network_interface_id = module.networking.network_interface_ids[0]
 }
 
 module "exm_vm" {
@@ -38,6 +40,8 @@ module "exm_vm" {
   admin_ssh_public_key = var.admin_ssh_public_key
   disk_size            = var.disk_size
   subnet_id            = module.networking.subnet_ids[1]
+  public_address_id    = module.networking.public_ip_ids[1]
+  network_interface_id = module.networking.network_interface_ids[1]
 }
 
 module "sql" {

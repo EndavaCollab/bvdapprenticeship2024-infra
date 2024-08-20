@@ -32,3 +32,13 @@ variable "subnet_id" {
   description = "The ID of the subnet to associate with the VM"
   type        = string
 }
+
+variable "public_address_id" {
+  description = "The ID of the public IP address associated to the subnet"
+  type        = string
+}
+
+variable "network_interface_id" {
+  description = "The ID of the network interface associated to the VM"
+  type        = string
+}
