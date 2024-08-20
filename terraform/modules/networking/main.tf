@@ -15,7 +15,7 @@ resource "azurerm_subnet" "subnet" {
 
 resource "azurerm_public_ip" "ip" {
   count               = length(var.networks)
-  name                = var.networks[count.index].public_ip_name
+  name                = var.networks[count.index].public_ip_address_name
   resource_group_name = var.resource_group_name
   location            = var.location
   allocation_method   = "Dynamic"
