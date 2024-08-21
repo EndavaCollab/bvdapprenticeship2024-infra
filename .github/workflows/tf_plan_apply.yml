@@ -35,7 +35,7 @@ jobs:
             subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
         - name: Install terraform
-          uses: hashicorp/setup-terraform@v1
+          uses: hashicorp/setup-terraform@v3
 
         - name: Download terraform dependencies
           run: terraform -chdir=terraform/ init
