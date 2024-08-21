@@ -27,8 +27,8 @@ resource "azurerm_public_ip" "ip" {
 
 resource "azurerm_network_interface" "network_interface" {
 
-  for_each            = var.network_info.network_interface
-  name                = each.name
+  for_each            = [for vm in var.virtual_machines : vm.networking.network_interface]
+  name                = each.value.name
   location            = var.location
   resource_group_name = var.resource_group_name
   

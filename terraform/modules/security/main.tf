@@ -1,5 +1,5 @@
 resource "azurerm_network_security_group" "nsg" {
-  count = len(var.security_groups)
+  count = length(var.security_groups)
   name                = var.security_groups[count.index].name
   location            = var.location
   resource_group_name = var.resource_group_name
