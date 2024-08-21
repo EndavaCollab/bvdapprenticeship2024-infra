@@ -59,7 +59,7 @@ virtual_machines = [
       ]
       public_ip = {
         name              = "exm-public-ip"
-        allocation_method = "dynamic"
+        allocation_method = "Dynamic"
       }
     }
   },
@@ -114,7 +114,7 @@ virtual_machines = [
       ]
       public_ip = {
         name              = "rcb-public-ip"
-        allocation_method = "dynamic"
+        allocation_method = "Dynamic"
       }
     }
   }
