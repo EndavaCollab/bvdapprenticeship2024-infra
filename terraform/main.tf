@@ -8,7 +8,7 @@ module "networking" {
   resource_group_name = var.resource_group_name
   location            = var.location
   address_space       = var.address_space
-  network_info = [for vm in var.virtual_machines : vm.network]
+  virtual_machines = var.virtual_machines
 }
 
 module "security" {
