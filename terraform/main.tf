@@ -8,14 +8,14 @@ module "networking" {
   resource_group_name = var.resource_group_name
   location            = var.location
   address_space       = var.address_space
-  networks            = var.networks
+  network_info        = var.virtual_machines[*].network
 }
 
 module "security" {
   source              = "./modules/security"
-  nsg_name            = var.nsg_name
   resource_group_name = var.resource_group_name
   location            = var.location
+  security_groups     = var.virtual_machines[*].networking.security_group
 }
 
 module "rcb_vm" {

@@ -7,18 +7,116 @@ nsg_name            = "nsg"
 vnet_name           = "vnet"
 address_space       = ["10.0.0.0/16"]
 
-networks = [
+virtual_machines = [
   {
-    network_interface_name = "exm-nic"
-    subnet_name            = "exm-subnet-1"
-    subnet_prefix          = "10.0.1.0/24"
-    public_ip_address_name = "exm-public-ip"
+    name          = "exm-vm",
+    database_name = "exm-db",
+    disk_size     = 30,
+    networking = {
+      network_interface = {
+        name = "exm-nic"
+        ip_configurations = [
+          {
+            name   = "exm-internal-1",
+            subnet = "exm-subnet-1"
+          },
+          {
+            name      = "exm-public",
+            public_ip = "exm-public-ip"
+          }
+        ],
+        security_group = {
+          name = "exm-nsg",
+          security_rules = [
+            {
+              name      = "AllowSSH"
+              priority  = 1001
+              direction = "Inbound"
+              protocol  = "Tcp"
+              port      = "22"
+            },
+            {
+              name      = "AllowHTTP"
+              priority  = 1002
+              direction = "Inbound"
+              protocol  = "Tcp"
+              port      = "80"
+            },
+            {
+              name      = "AllowHTTPAlt"
+              priority  = 1003
+              direction = "Inbound"
+              protocol  = "Tcp"
+              port      = "8080"
+          }]
+        }
+      }
+      subnets = [
+        {
+          name   = "exm-subnet-1",
+          prefix = "10.0.1.0/24"
+        }
+      ]
+      public_ip = {
+        name              = "exm-public-ip"
+        allocation_method = "dynamic"
+      }
+    }
   },
   {
-    network_interface_name = "rcb-nic"
-    subnet_name            = "rcb-subnet"
-    subnet_prefix          = "10.0.2.0/24"
-    public_ip_address_name = "rcb-public-ip"
+    name          = "rcb-vm",
+    database_name = "rcb-db",
+    disk_size     = 30,
+    networking = {
+      network_interface = {
+        name = "rcb-nic"
+        ip_configurations = [
+          {
+            name   = "rcb-internal-1",
+            subnet = "rcb-subnet-1"
+          },
+          {
+            name      = "rcb-public",
+            public_ip = "rcb-public-ip"
+          }
+        ],
+        security_group = {
+          name = "rcb-nsg",
+          security_rules = [
+            {
+              name      = "AllowSSH"
+              priority  = 1001
+              direction = "Inbound"
+              protocol  = "Tcp"
+              port      = "22"
+            },
+            {
+              name      = "AllowHTTP"
+              priority  = 1002
+              direction = "Inbound"
+              protocol  = "Tcp"
+              port      = "80"
+            },
+            {
+              name      = "AllowHTTPAlt"
+              priority  = 1003
+              direction = "Inbound"
+              protocol  = "Tcp"
+              port      = "8080"
+          }]
+        }
+      }
+      subnets = [
+        {
+          name   = "rcb-subnet-1",
+          prefix = "10.0.1.0/24"
+        }
+      ]
+      public_ip = {
+        name              = "rcb-public-ip"
+        allocation_method = "dynamic"
+      }
+    }
   }
 ]
 

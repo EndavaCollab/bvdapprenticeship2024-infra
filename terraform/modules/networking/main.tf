@@ -6,35 +6,51 @@ resource "azurerm_virtual_network" "vnet" {
 }
 
 resource "azurerm_subnet" "subnet" {
-  count                = length(var.networks)
-  name                 = var.networks[count.index].subnet_name
+  for_each             = var.network_info[*].networking.subnets
+  name                 = each.value.name
   resource_group_name  = var.resource_group_name
   virtual_network_name = azurerm_virtual_network.vnet.name
-  address_prefixes     = [var.networks[count.index].subnet_prefix]
+  address_prefixes     = [each.value.prefix]
 }
 
 resource "azurerm_public_ip" "ip" {
-  count               = length(var.networks)
-  name                = var.networks[count.index].public_ip_address_name
+  for_each            = var.network_info[*].networking.public_ip
+  name                = each.value.name
   resource_group_name = var.resource_group_name
   location            = var.location
-  allocation_method   = "Dynamic"
-  
+  allocation_method   = each.allocation_method
+
   lifecycle {
     create_before_destroy = true
   }
 }
 
 resource "azurerm_network_interface" "network_interface" {
-  count               = length(var.networks)
-  name                = var.networks[count.index].network_interface_name
+
+  for_each            = var.network_info.network_interface
+  name                = each.name
   location            = var.location
   resource_group_name = var.resource_group_name
+  
 
-  ip_configuration {
-    name                          = "internal"
-    subnet_id                     = azurerm_subnet.subnet[count.index].id
-    private_ip_address_allocation = "Dynamic"
-    public_ip_address_id          = azurerm_public_ip.ip[count.index].id
+
+  # ip_configuration {
+  #   name                          = "internal"
+  #   subnet_id                     = azurerm_subnet.subnet[count.index].id
+  #   private_ip_address_allocation = "Dynamic"
+  #   public_ip_address_id          = azurerm_public_ip.ip[count.index].id
+  # }
+
+  dynamic "ip_configuration" {
+    for_each = each.value.ip_configurations
+
+    content {
+      name                          = ip_configuration.value.name
+      subnet_id                     = lookup(ip_configuration.value.subnet, azurerm_subnet.subnet[ip_configuration.value.subnet].id, null)
+      private_ip_address_allocation = "Dynamic"
+      # public_ip_address_id          = azurerm_public_ip.ip[ip_configuration.value.public_ip].id
+      public_ip_address_id = lookup(ip_configuration.value.public_ip, azurerm_public_ip.ip[ip_configuration.value.public_ip].id, null)
+
+    }
   }
 }
