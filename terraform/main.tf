@@ -15,7 +15,7 @@ module "security" {
   source              = "./modules/security"
   resource_group_name = var.resource_group_name
   location            = var.location
-  security_groups     = var.virtual_machines[*].networking.security_group
+  security_groups     = var.virtual_machines[*].networking.networking_interface.security_group
 }
 
 module "rcb_vm" {
