@@ -120,15 +120,10 @@ virtual_machines = [
 ]
 
 # Expense manager
-backend_exm_port  = 8080
 exm_database_name = "exm-db"
-exm_vm_name       = "exm-vm"
 
 # Recipe book
-backend_rcb_port  = 8080
 rcb_database_name = "rcb-db"
-rcb_vm_name       = "rcb-vm"
-
 
 # Secrets env
 # admin_password -> TF_VAR_admin_password (used for db)
