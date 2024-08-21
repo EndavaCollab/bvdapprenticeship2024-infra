@@ -6,7 +6,7 @@ resource "azurerm_virtual_network" "vnet" {
 }
 
   locals {
-    subnets = concat(var.virtual_machines[*].subnets)
+    subnets = concat(var.virtual_machines[*].networking.subnets)
   }
 
 resource "azurerm_subnet" "subnet" {
