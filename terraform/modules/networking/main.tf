@@ -11,10 +11,10 @@ resource "azurerm_virtual_network" "vnet" {
 
 resource "azurerm_subnet" "subnet" {
 count = length(local.subnets)
-  name                 = local.subnets.name
+  name                 = local.subnets[count.index].name
   resource_group_name  = var.resource_group_name
   virtual_network_name = azurerm_virtual_network.vnet.name
-  address_prefixes     = [local.subnets.prefix.prefix]
+  address_prefixes     = [local.subnets[count.index].prefix]
 }
 
 resource "azurerm_public_ip" "ip" {
