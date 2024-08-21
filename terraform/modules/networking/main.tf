@@ -6,7 +6,7 @@ resource "azurerm_virtual_network" "vnet" {
 }
 
 resource "azurerm_subnet" "subnet" {
-  for_each             = var.network_info[*].networking.subnets
+  for_each             = [for vm in var.virtual_machines : vm.networking.subnets]
   name                 = each.value.name
   resource_group_name  = var.resource_group_name
   virtual_network_name = azurerm_virtual_network.vnet.name
@@ -14,7 +14,7 @@ resource "azurerm_subnet" "subnet" {
 }
 
 resource "azurerm_public_ip" "ip" {
-  for_each            = var.network_info[*].networking.public_ip
+  for_each            = [for vm in var.virtual_machines : vm.networking.public_ip]
   name                = each.value.name
   resource_group_name = var.resource_group_name
   location            = var.location
