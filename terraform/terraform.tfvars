@@ -1,6 +1,5 @@
 # General
 resource_group_name = "apprenticeship-2024-rg"
-disk_size           = 30
 location            = "North Europe"
 sql_server_name     = "sql-server-apprenticeship"
 nsg_name            = "nsg"
