@@ -18,15 +18,6 @@ variable "location" {
   type        = string
 }
 
-# variable "networks" {
-#   description = "List of networks required to deploy the VMs"
-#   type = list(object({
-#     network_interface_name = string,
-#     subnet_name            = string,
-#     subnet_prefix          = string,
-#     public_ip_address_name = string
-#   }))
-# }
 variable "virtual_machines" {
   description = "List of virtual machines with their configurations"
   type = list(object({
@@ -63,5 +54,3 @@ variable "virtual_machines" {
     })
   }))
 }
-
-

@@ -5,12 +5,16 @@ resource "azurerm_virtual_network" "vnet" {
   resource_group_name = var.resource_group_name
 }
 
+  locals {
+    subnets = concat(var.virtual_machines[*].subnets)
+  }
+
 resource "azurerm_subnet" "subnet" {
-  count = length(var.virtual_machines)
-  name                 = var.virtual_machines[count.index].name
+count = length(local.subnets)
+  name                 = local.subnets.name
   resource_group_name  = var.resource_group_name
   virtual_network_name = azurerm_virtual_network.vnet.name
-  address_prefixes     = [var.virtual_machines[count.index].prefix]
+  address_prefixes     = [local.subnets.prefix.prefix]
 }
 
 resource "azurerm_public_ip" "ip" {
