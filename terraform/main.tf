@@ -42,7 +42,6 @@ module "security" {
 
 module "vm" {
   count = length(var.virtual_machines)
-  for_each = [for vm in var.virtual_machines : vm]
 
   source = "./modules/vm"
   resource_group_name = var.resource_group_name
