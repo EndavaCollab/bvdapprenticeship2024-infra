@@ -6,19 +6,19 @@ resource "azurerm_virtual_network" "vnet" {
 }
 
 resource "azurerm_subnet" "subnet" {
-  for_each             = [for vm in var.virtual_machines : vm.networking.subnets]
-  name                 = each.value.name
+  count = length(var.virtual_machines)
+  name                 = var.virtual_machines[count.index].name
   resource_group_name  = var.resource_group_name
   virtual_network_name = azurerm_virtual_network.vnet.name
-  address_prefixes     = [each.value.prefix]
+  address_prefixes     = [var.virtual_machines[count.index].prefix]
 }
 
 resource "azurerm_public_ip" "ip" {
-  for_each            = [for vm in var.virtual_machines : vm.networking.public_ip]
-  name                = each.value.name
+  count = length(var.virtual_machines)
+  name                = var.virtual_machines[0].networking.public_ip.name
   resource_group_name = var.resource_group_name
   location            = var.location
-  allocation_method   = each.value.allocation_method
+  allocation_method   = var.virtual_machines[0].networking.public_ip.allocation_method
 
   lifecycle {
     create_before_destroy = true
@@ -26,9 +26,8 @@ resource "azurerm_public_ip" "ip" {
 }
 
 resource "azurerm_network_interface" "network_interface" {
-
-  for_each            = [for vm in var.virtual_machines : vm.networking.network_interface]
-  name                = each.value.name
+  count = length(var.virtual_machines)
+  name                = var.virtual_machines[0].networking.network_interface.name
   location            = var.location
   resource_group_name = var.resource_group_name
   
@@ -42,7 +41,7 @@ resource "azurerm_network_interface" "network_interface" {
   # }
 
   dynamic "ip_configuration" {
-    for_each = each.value.ip_configurations
+    for_each = var.virtual_machines[0].networking.network_interface.ip_configurations
 
     content {
       name                          = ip_configuration.value.name
