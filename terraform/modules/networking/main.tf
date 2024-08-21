@@ -23,9 +23,9 @@ resource "azurerm_public_ip" "ip" {
   count               = length(var.virtual_machines)
   resource_group_name = var.resource_group_name
   location            = var.location
-  
+
   name                = local.public_ip[count.index].name
-  allocation_method   = local.public_ip.allocation_method
+  allocation_method   = local.public_ip[count.index].allocation_method
 
   lifecycle {
     create_before_destroy = true
