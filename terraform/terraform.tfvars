@@ -15,11 +15,8 @@ virtual_machines = [
         name = "exm-nic"
         ip_configurations = [
           {
-            name   = "exm-internal-1",
-            subnet = "exm-subnet-1"
-          },
-          {
-            name      = "exm-public",
+            name      = "exm-internal",
+            subnet    = "exm-subnet-1"
             public_ip = "exm-public-ip"
           }
         ],
@@ -70,13 +67,10 @@ virtual_machines = [
         name = "rcb-nic"
         ip_configurations = [
           {
-            name   = "rcb-internal-1",
-            subnet = "rcb-subnet-1"
-          },
-          {
-            name      = "rcb-public",
+            name      = "rcb-internal",
+            subnet    = "rcb-subnet-1",
             public_ip = "rcb-public-ip"
-          }
+          },
         ],
         security_group = {
           name = "rcb-nsg",
