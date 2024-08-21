@@ -49,10 +49,9 @@ resource "azurerm_network_interface" "network_interface" {
 
     content {
       name                          = ip_configuration.value.name
-      subnet_id                     = lookup(ip_configuration.value.subnet, azurerm_subnet.subnet[ip_configuration.value.subnet].id, null)
+      subnet_id                     = lookup(ip_configuration.value.subnet, [for subnet in azurerm_subnet.subnet : subnet if subnet.name == ip_configuration.value.subnet][0], null)
       private_ip_address_allocation = "Dynamic"
-      # public_ip_address_id          = azurerm_public_ip.ip[ip_configuration.value.public_ip].id
-      public_ip_address_id = lookup(ip_configuration.value.public_ip, azurerm_public_ip.ip[ip_configuration.value.public_ip].id, null)
+      public_ip_address_id = lookup(ip_configuration.value.public_ip, [for ip in azurerm_public_ip.ip : ip if ip.name == ip_configuration.value.public_ip][0], null)
 
     }
   }
