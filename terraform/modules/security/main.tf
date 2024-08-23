@@ -20,10 +20,17 @@ resource "azurerm_network_security_group" "nsg" {
     }
   }
 
+  lifecycle {
+    ignore_changes = [ tags ]
+  }
 }
 
 resource "azurerm_subnet_network_security_group_association" "nsg-subnet-association" {
   count                     = length(var.subnet_ids)
   subnet_id                 = var.subnet_ids[count.index]
   network_security_group_id = azurerm_network_security_group.nsg.id
+
+  lifecycle {
+    ignore_changes = [ tags ]
+  }
 }

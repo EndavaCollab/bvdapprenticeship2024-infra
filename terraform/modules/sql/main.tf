@@ -6,6 +6,10 @@ resource "azurerm_mysql_flexible_server" "server" {
   sku_name               = "B_Standard_B1s"
   administrator_password = var.admin_password
   zone                   = "1"
+
+  lifecycle {
+    ignore_changes = [ tags ]
+  }
 }
 
 resource "azurerm_mysql_flexible_database" "rcb_database" {
@@ -14,6 +18,10 @@ resource "azurerm_mysql_flexible_database" "rcb_database" {
   charset             = "utf8"
   collation           = "utf8_unicode_ci"
   name                = var.rcb_database_name
+  
+  lifecycle {
+    ignore_changes = [ tags ]
+  }
 }
 
 resource "azurerm_mysql_flexible_database" "exm_database" {
@@ -22,4 +30,8 @@ resource "azurerm_mysql_flexible_database" "exm_database" {
   charset             = "utf8"
   collation           = "utf8_unicode_ci"
   name                = var.exm_database_name
+
+  lifecycle {
+    ignore_changes = [ tags ]
+  }
 }

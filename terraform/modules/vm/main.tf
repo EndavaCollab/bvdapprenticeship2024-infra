@@ -3,6 +3,10 @@ resource "azurerm_public_ip" "vm_public_ip" {
   resource_group_name = var.resource_group_name
   location            = var.location
   allocation_method   = var.public_ip_allocation_method
+
+  lifecycle {
+    ignore_changes = [ tags ]
+  }
 }
 
 resource "azurerm_network_interface" "vm_nic" {
@@ -15,6 +19,10 @@ resource "azurerm_network_interface" "vm_nic" {
     subnet_id                     = var.subnet_id
     private_ip_address_allocation = "Dynamic"
     public_ip_address_id          = azurerm_public_ip.vm_public_ip.id
+  }
+
+  lifecycle {
+    ignore_changes = [ tags ]
   }
 }
 
@@ -43,5 +51,9 @@ resource "azurerm_linux_virtual_machine" "server" {
     offer     = "0001-com-ubuntu-server-jammy"
     sku       = "22_04-lts"
     version   = "latest"
+  }
+
+  lifecycle {
+    ignore_changes = [ tags ]
   }
 }
