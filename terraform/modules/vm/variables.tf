@@ -8,7 +8,7 @@ variable "location" {
   type        = string
 }
 
-variable "server_name" {
+variable "vm_name" {
   description = "Name of the Virtual Machine"
   type        = string
 }
@@ -30,5 +30,15 @@ variable "disk_size" {
 
 variable "subnet_id" {
   description = "The ID of the subnet to associate with the VM"
+  type        = string
+}
+
+variable "vm_size" {
+  description = "Type / size of the VM (ex: StandardB2s)"
+  type        = string
+}
+
+variable "public_ip_allocation_method" {
+  description = "Type of allocation for the public IP, either Dynamic or Static"
   type        = string
 }

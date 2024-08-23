@@ -72,20 +72,30 @@ variable "admin_password" {
   sensitive   = true
 }
 
-variable "backend_exm_port" {
-  description = "Port for Expense Manager backend application"
-  type        = number
-}
-
-variable "backend_rcb_port" {
-  description = "Port for Recipe Book backend application"
-  type        = number
-}
-
 variable "subnets" {
   description = "Required subnets to deploy the VMs"
   type = list(object({
     name   = string,
     prefix = string
+  }))
+}
+
+variable "virtual_machines" {
+  description = "List of virtual machines"
+  type = list(object({
+    name      = string,
+    disk_size = string,
+    vm_size   = string
+  }))
+}
+
+variable "security_rules" {
+  description = "List of security rules to apply to the NSG"
+  type = list(object({
+    name      = string,
+    priority  = number,
+    direction = string,
+    protocol  = string
+    port      = string
   }))
 }
