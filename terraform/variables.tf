@@ -36,21 +36,6 @@ variable "admin_ssh_public_key" {
   sensitive   = true
 }
 
-variable "disk_size" {
-  description = "Disk size for the server (in GBs)"
-  type        = number
-}
-
-variable "rcb_vm_name" {
-  description = "Virtual Machine Name for Recipe Book project"
-  type        = string
-}
-
-variable "exm_vm_name" {
-  description = "Virtual Machine Name for Expense Manager project"
-  type        = string
-}
-
 variable "sql_server_name" {
   description = "Name for the MySql server"
   type        = string
