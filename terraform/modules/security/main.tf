@@ -8,11 +8,11 @@ resource "azurerm_network_security_group" "nsg" {
     for_each = var.security_rules
 
     content {
-      name                       = each.value.name
-      priority                   = each.value.priority
-      direction                  = each.value.direction
-      protocol                   = each.value.protocol
-      destination_port_range     = each.value.port
+      name                       = security_rule.value.name
+      priority                   = security_rule.value.priority
+      direction                  = security_rule.value.direction
+      protocol                   = security_rule.value.protocol
+      destination_port_range     = security_rule.value.port
       source_port_range          = "*"
       source_address_prefix      = "*"
       destination_address_prefix = "*"
