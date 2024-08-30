@@ -12,3 +12,19 @@ variable "location" {
   description = "Location of the resources for the projects"
   type        = string
 }
+
+variable "security_rules" {
+  description = "List of security rules to apply to the NSG"
+  type = list(object({
+    name      = string,
+    priority  = number,
+    direction = string,
+    protocol  = string
+    port      = string
+  }))
+}
+
+variable "subnet_ids" {
+  description = "List of subnet IDs to associate with the NSG"
+  type        = list(string)
+}

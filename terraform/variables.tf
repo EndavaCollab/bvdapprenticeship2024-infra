@@ -36,21 +36,6 @@ variable "admin_ssh_public_key" {
   sensitive   = true
 }
 
-variable "disk_size" {
-  description = "Disk size for the server (in GBs)"
-  type        = number
-}
-
-variable "rcb_vm_name" {
-  description = "Virtual Machine Name for Recipe Book project"
-  type        = string
-}
-
-variable "exm_vm_name" {
-  description = "Virtual Machine Name for Expense Manager project"
-  type        = string
-}
-
 variable "sql_server_name" {
   description = "Name for the MySql server"
   type        = string
@@ -72,20 +57,30 @@ variable "admin_password" {
   sensitive   = true
 }
 
-variable "backend_exm_port" {
-  description = "Port for Expense Manager backend application"
-  type        = number
-}
-
-variable "backend_rcb_port" {
-  description = "Port for Recipe Book backend application"
-  type        = number
-}
-
 variable "subnets" {
   description = "Required subnets to deploy the VMs"
   type = list(object({
     name   = string,
     prefix = string
+  }))
+}
+
+variable "virtual_machines" {
+  description = "List of virtual machines"
+  type = list(object({
+    name      = string,
+    disk_size = string,
+    vm_size   = string
+  }))
+}
+
+variable "security_rules" {
+  description = "List of security rules to apply to the NSG"
+  type = list(object({
+    name      = string,
+    priority  = number,
+    direction = string,
+    protocol  = string
+    port      = string
   }))
 }

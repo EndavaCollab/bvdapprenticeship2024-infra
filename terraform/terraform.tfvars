@@ -1,11 +1,49 @@
-# General
+# General info
 resource_group_name = "apprenticeship-2024-rg"
-disk_size           = 30
 location            = "North Europe"
-sql_server_name     = "sql-server-apprenticeship"
-nsg_name            = "nsg"
-vnet_name           = "vnet"
-address_space       = ["10.0.0.0/16"]
+
+# SQL
+sql_server_name   = "sql-server-apprenticeship"
+rcb_database_name = "rcb-db"
+exm_database_name = "exm-db"
+
+# Security
+nsg_name = "nsg"
+security_rules = [
+  {
+    name      = "AllowSSH",
+    priority  = 1001,
+    direction = "Inbound",
+    protocol  = "Tcp"
+    port      = "22"
+  },
+  {
+    name      = "AllowHTTP",
+    priority  = 1002,
+    direction = "Inbound",
+    protocol  = "Tcp"
+    port      = "80"
+  },
+  {
+    name      = "AllowHTTPS",
+    priority  = 1003,
+    direction = "Inbound",
+    protocol  = "Tcp"
+    port      = "443"
+  },
+  {
+    name      = "AllowHTTPAlt",
+    priority  = 1004,
+    direction = "Inbound",
+    protocol  = "Tcp"
+    port      = "8080"
+  }
+]
+
+# Networking
+vnet_name     = "vnet"
+address_space = ["10.0.0.0/16"]
+
 subnets = [
   {
     name   = "exm-subnet-1"
@@ -17,16 +55,18 @@ subnets = [
   }
 ]
 
-# Expense manager
-backend_exm_port  = 8080
-exm_database_name = "exm-db"
-exm_vm_name       = "exm-vm"
-
-# Recipe book
-backend_rcb_port  = 8080
-rcb_database_name = "rcb-db"
-rcb_vm_name       = "rcb-vm"
-
+virtual_machines = [
+  {
+    name      = "exm",
+    disk_size = 30,
+    vm_size   = "Standard_B1s"
+  },
+  {
+    name      = "rcb",
+    disk_size = 30,
+    vm_size   = "Standard_B1s"
+  }
+]
 
 # Secrets env
 # admin_password -> TF_VAR_admin_password (used for db)

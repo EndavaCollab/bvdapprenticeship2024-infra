@@ -5,6 +5,6 @@ output "vnet_id" {
 
 output "subnet_ids" {
   description = "IDs of the created subnets"
-  value = [for subnet in azurerm_subnet.subnet : subnet.id]
+  value       = [for subnet in azurerm_subnet.subnet : subnet.id]
 }
 

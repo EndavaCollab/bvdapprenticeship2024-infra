@@ -16,28 +16,22 @@ module "security" {
   nsg_name            = var.nsg_name
   resource_group_name = var.resource_group_name
   location            = var.location
+  security_rules      = var.security_rules
+  subnet_ids          = module.networking.subnet_ids
 }
 
-module "rcb_vm" {
-  source               = "./modules/vm"
-  resource_group_name  = var.resource_group_name
-  location             = var.location
-  server_name          = var.rcb_vm_name
-  admin_username       = var.admin_username
-  admin_ssh_public_key = var.admin_ssh_public_key
-  disk_size            = var.disk_size
-  subnet_id            = module.networking.subnet_ids[0]
-}
-
-module "exm_vm" {
-  source               = "./modules/vm"
-  resource_group_name  = var.resource_group_name
-  location             = var.location
-  server_name          = var.exm_vm_name
-  admin_username       = var.admin_username
-  admin_ssh_public_key = var.admin_ssh_public_key
-  disk_size            = var.disk_size
-  subnet_id            = module.networking.subnet_ids[1]
+module "vm" {
+  count                       = length(var.virtual_machines)
+  vm_name                     = var.virtual_machines[count.index].name
+  source                      = "./modules/vm"
+  resource_group_name         = var.resource_group_name
+  location                    = var.location
+  disk_size                   = 30
+  vm_size                     = var.virtual_machines[count.index].vm_size
+  admin_ssh_public_key        = var.admin_ssh_public_key
+  admin_username              = var.admin_username
+  public_ip_allocation_method = "Dynamic"
+  subnet_id                   = module.networking.subnet_ids[count.index]
 }
 
 module "sql" {
