@@ -29,7 +29,7 @@ resource "azurerm_mysql_flexible_database" "exm_database" {
 }
 
 resource "azurerm_mysql_flexible_server_firewall_rule" "mysql_firewall_rule" {
-  name                = "allow_connection"
+  name                = "allow"
   resource_group_name = var.resource_group_name
   server_name         = azurerm_mysql_flexible_server.server.name
   start_ip_address    = "0.0.0.0"
