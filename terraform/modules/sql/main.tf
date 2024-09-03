@@ -28,7 +28,7 @@ resource "azurerm_mysql_flexible_database" "exm_database" {
   name                = var.exm_database_name
 }
 
-resource "azurerm_mysql_flexible_server_firewall_rule" "example" {
+resource "azurerm_mysql_flexible_server_firewall_rule" "mysql_firewall_rule" {
   name                = "allow_connection"
   resource_group_name = var.resource_group_name
   server_name         = azurerm_mysql_flexible_server.server.name
