@@ -94,7 +94,7 @@ jobs:
             run: bash ./write_certs.sh
 
           - name: Worker - Move SSL Certs to remote
-            run: scp -r .sslcerts/ exm:~/
+            run: scp -r ~/.sslcerts/ exm:~/
     deploy_ssl_certs_rcb:
       name: Deploy SSL certs on VM (RCB)
       runs-on: ubuntu-latest
@@ -133,4 +133,4 @@ jobs:
           run: bash ./write_certs.sh
 
         - name: Worker - Move SSL Certs to remote
-          run: scp -r .sslcerts/ exm:~/
+          run: scp -r ~/.sslcerts/ exm:~/
