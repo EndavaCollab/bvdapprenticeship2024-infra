@@ -60,6 +60,7 @@ jobs:
         name: Deploy SSL certs on VM (EXM)
         runs-on: ubuntu-latest
         environment: apply
+        # if: ${{ github.event.inputs.action_type == 'true' }}
         needs: plan_apply
         steps:
           - name: Worker - Checkout repo
@@ -97,6 +98,7 @@ jobs:
     deploy_ssl_certs_rcb:
       name: Deploy SSL certs on VM (RCB)
       runs-on: ubuntu-latest
+      # if: ${{ github.event.inputs.action_type == 'true' }}
       environment: apply
       needs: plan_apply
       steps:
