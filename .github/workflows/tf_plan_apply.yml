@@ -56,3 +56,79 @@ jobs:
             TF_VAR_admin_password: ${{secrets.TF_VAR_ADMIN_PASSWORD}}
             TF_VAR_admin_ssh_public_key: ${{secrets.TF_VAR_ADMIN_SSH_PUBLIC_KEY}}
           run: terraform -chdir=terraform/ apply -auto-approve  
+    deploy_ssl_certs_exm:
+        name: Deploy SSL certs on VM (EXM)
+        runs-on: ubuntu-latest
+        environment: apply
+        needs: plan_apply
+        steps:
+          - name: Worker - Checkout repo
+            uses: actions/checkout@v4
+
+          - name: Worker - Azure login
+            uses: azure/login@v2
+            with:
+              client-id:       ${{ secrets.AZURE_CLIENT_ID }}
+              tenant-id:       ${{ secrets.AZURE_TENANT_ID }}
+              subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+          - name: Worker - Fetch Remote IP address
+            working-directory: .github/workflows/scripts
+            run: bash ./fetch_ip.sh "exm-public-ip"
+      
+          - name: Worker - Config SSH
+            working-directory: .github/workflows/scripts
+            env:
+              SSH_PRIVATE_KEY:    ${{ secrets.SSH_PRIVATE_KEY }}
+              SSH_ADMIN_USERNAME: ${{ secrets.TF_VAR_ADMIN_USERNAME }}
+            run: bash ./worker_config_ssh.sh "exm"
+
+          - name: Worker - Write certs to files
+            working-directory: .github/workflows/scripts
+            env:
+              SSL_CERT:      ${{ secrets.EXM_SSL_CERT }}
+              SSL_CHAIN:     ${{ secrets.EXM_SSL_CHAIN }}
+              SSL_FULLCHAIN: ${{ secrets.EXM_SSL_FULLCHAIN }}
+              SSL_PRIVKEY:   ${{ secrets.EXM_SSL_PRIVKEY }}
+            run: bash ./write_certs.sh
+
+          - name: Worker - Move SSL Certs to remote
+            run: scp -r .sslcerts/ exm:~/
+    deploy_ssl_certs_rcb:
+      name: Deploy SSL certs on VM (RCB)
+      runs-on: ubuntu-latest
+      environment: apply
+      needs: plan_apply
+      steps:
+        - name: Worker - Checkout repo
+          uses: actions/checkout@v4
+
+        - name: Worker - Azure login
+          uses: azure/login@v2
+          with:
+            client-id:       ${{ secrets.AZURE_CLIENT_ID }}
+            tenant-id:       ${{ secrets.AZURE_TENANT_ID }}
+            subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+        - name: Worker - Fetch Remote IP address
+          working-directory: .github/workflows/scripts
+          run: bash ./fetch_ip.sh "rcb-public-ip"
+
+        - name: Worker - Config SSH
+          working-directory: .github/workflows/scripts
+          env:
+            SSH_PRIVATE_KEY:    ${{ secrets.SSH_PRIVATE_KEY }}
+            SSH_ADMIN_USERNAME: ${{ secrets.TF_VAR_ADMIN_USERNAME }}
+          run: bash ./worker_config_ssh.sh "rcb"
+
+        - name: Worker - Write certs to files
+          working-directory: .github/workflows/scripts
+          env:
+            SSL_CERT:      ${{ secrets.RCB_SSL_CERT }}
+            SSL_CHAIN:     ${{ secrets.RCB_SSL_CHAIN }}
+            SSL_FULLCHAIN: ${{ secrets.RCB_SSL_FULLCHAIN }}
+            SSL_PRIVKEY:   ${{ secrets.RCB_SSL_PRIVKEY }}
+          run: bash ./write_certs.sh
+
+        - name: Worker - Move SSL Certs to remote
+          run: scp -r .sslcerts/ exm:~/
