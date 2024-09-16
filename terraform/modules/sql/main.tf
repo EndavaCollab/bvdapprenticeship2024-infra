@@ -27,3 +27,11 @@ resource "azurerm_mysql_flexible_database" "exm_database" {
   collation           = "utf8_unicode_ci"
   name                = var.exm_database_name
 }
+
+resource "azurerm_mysql_flexible_server_firewall_rule" "mysql_firewall_rule" {
+  name                = "allow"
+  resource_group_name = var.resource_group_name
+  server_name         = azurerm_mysql_flexible_server.server.name
+  start_ip_address    = "0.0.0.0"
+  end_ip_address      = "255.255.255.255"
+}
